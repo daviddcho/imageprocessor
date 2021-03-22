@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Image Processor</title>
+    <style>
+      body { background-color: LightGray; }
+      ul { list-style-type:none; }
+    </style>
+  </head>
+  <body>
+    <div class="content">
+        <h2>AWS S3 Image Processor</h2>
+        <div>
+          <h3>Upload your image here:</h3>
+          <form method="POST" action="/upload" enctype=multipart/form-data>
+            <input type=file name=file>
+            <input type=submit value=Upload>
+          </form>
+        </div>
+        <div>
+          <h3>Want to add an effect?</h3>
+          <p> Select the file you want to add the effect to:</p>
+          <form method="POST" action="{{ url_for('applyfilter') }}"> 
+            <ul> 
+              {% for item in contents %}
+                <li>
+                  <input type="radio" name="imagefile" value="{{ item.Key }}"> {{ item.Key }} 
+                </li>
+              {% endfor %}
+            </ul>
+            <label for "effects">Choose an effect:</label>
+            <select name="effect" id="effect">
+              <option value="Gray">Gray</option>
+              <option value="Sepia">Sepia</option>
+              <option value="Poster">Poster</option>
+              <option value="Blur">Blur</option>
+              <option value="Edge">Edge</option>
+              <option value="Solar">Solar</option>
+            </select>
+            <p><input type=submit value=Submit>
+          </form>
+        </div>
+        <div>
+          <h3>These are your uploaded images:</h3>
+          <p>Click on the filename to download it.</p>
+          <ul>
+            {% for item in contents %}
+              <li>
+                <a href="/downloads/{{ item.Key }}"> {{ item.Key }} </a>
+              </li>
+            {% endfor %}
+          </ul>
+        </div>
+
+				<div>
+          <h3>Delete your files here:</h3>
+          <p> Select the files you want to delete:</p>
+          <form method="POST" action="{{ url_for('delete') }}"> 
+            <ul> 
+              {% for item in contents %}
+                <li>
+                  <input type="checkbox" name="imagefiles" value="{{ item.Key }}"> {{ item.Key }} 
+                </li>
+              {% endfor %}
+            </ul>
+						<p><input type=submit value=Submit>
+				</div>
+    </div>
+  </body>
+</html>
