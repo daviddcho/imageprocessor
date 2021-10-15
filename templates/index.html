@@ -51,8 +51,7 @@
             {% endfor %}
           </ul>
         </div>
-
-				<div>
+        <div>
           <h3>Delete your files here:</h3>
           <p> Select the files you want to delete:</p>
           <form method="POST" action="{{ url_for('delete') }}"> 
@@ -63,8 +62,8 @@
                 </li>
               {% endfor %}
             </ul>
-						<p><input type=submit value=Submit>
-				</div>
+          <p><input type=submit value=Submit>
+        </div>
     </div>
   </body>
 </html>
