@@ -15,3 +15,6 @@ flask run --host=0.0.0.0 --port=8080
 make role arn on aws with EC2FullAccess and S3FullAccess
 add role arn to .aws/config, then
 mv .aws/ ~/
+
+big ec2 tips:
+make sure u set the inbound rules u need in security group
