@@ -16,5 +16,7 @@ make role arn on aws with EC2FullAccess and S3FullAccess
 add role arn to .aws/config, then
 mv .aws/ ~/
 
-big ec2 tips:
+whats the difference between a role and a user? 
+
+noob ec2 tips:
 make sure u set the inbound rules u need in security group
