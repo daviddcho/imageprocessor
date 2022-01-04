@@ -35,7 +35,6 @@ def download(filename):
 
 @app.route("/applyfilter", methods=['POST'])
 def applyfilter():
-  print("Hello?")
   if request.method == "POST":
     filename = request.form.get("imagefile")
     filtertype = request.form.get("effect")  
@@ -45,16 +44,16 @@ def applyfilter():
 
 @app.route("/delete", methods=['POST']) 
 def delete():
-	if request.method == 'POST':
-		objects = []
-		for filename in request.form.getlist("imagefiles"):
-			Object = {}
-			Object["Key"] = filename 
-			objects.append(Object)
-		delete_dict = {}
-		delete_dict["Objects"] = objects
-		delete_objects(delete_dict, BUCKET)
-	return redirect("/")
+  if request.method == 'POST':
+    objects = []
+    for filename in request.form.getlist("imagefiles"):
+      Object = {}
+      Object["Key"] = filename
+      objects.append(Object)
+    delete_dict = {}
+    delete_dict["Objects"] = objects
+    delete_objects(delete_dict, BUCKET)
+  return redirect("/")
 
 if __name__ == "__main__":
   app.run(debug=True)

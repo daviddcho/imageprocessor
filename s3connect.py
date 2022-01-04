@@ -3,17 +3,16 @@ from os import path
 from PIL import Image, ImageOps, ImageFilter
 
 
-def upload_file(file_name, bucket):
-  object_name = file_name
-  output = f"uploads/{file_name}"
-  s3_client = boto3.client('s3')
-  response = s3_client.upload_file(output, bucket, object_name)
+def upload_file(filename, bucket):
+  output = f"uploads/{filename}"
+  client = boto3.client('s3')
+  response = client.upload_file(output, bucket, filename)
   return response 
 
-def download_file(file_name, bucket):
+def download_file(filename, bucket):
   s3 = boto3.resource('s3')
-  output = f"downloads/{file_name}"
-  s3.Bucket(bucket).download_file(file_name, output)
+  output = f"downloads/{filename}"
+  s3.Bucket(bucket).download_file(filename, output)
   return output
 
 def list_files(bucket):
@@ -21,20 +20,19 @@ def list_files(bucket):
   contents = []
   try:
     for item in s3.list_objects(Bucket=bucket)['Contents']:
-      print(item) 
       contents.append(item)
   except Exception as e:
     pass
   return contents
 
 
-def apply_filter(file_name, preset, bucket):
+def apply_filter(filename, preset, bucket):
   s3 = boto3.resource('s3')
-  inputfile = f"downloads/{file_name}"
-  if path.exists(inputfile) != True:
-    download_file(file_name, bucket)
+  inp = f"downloads/{filename}"
+  if path.exists(inp) != True:
+    download_file(filename, bucket)
   
-  im = Image.open(inputfile)
+  im = Image.open(inp)
   im = im.convert("RGB")
   if preset == 'Gray':
     im = ImageOps.grayscale(im)
@@ -53,21 +51,20 @@ def apply_filter(file_name, preset, bucket):
     for i in range(255):
       sepia.extend((r*i//255, g*i//255, b*i//255))
     im = im.convert("L")
-    print(im.mode)
     im = ImageOps.autocontrast(im)
     im.putpalette(sepia)
 
-  f = file_name.split(".")
-  outputfilename = f"{f[0]}-{preset}.jpeg"
-  outputfile = f"uploads/{outputfilename}"
+  name = filename.split(".")[0]
+  outname = f"{name}-{preset}.jpeg"
+  outf = f"uploads/{outname}"
 
   im = im.convert("RGB")
-  im.save(outputfile, format="JPEG")
-  upload_file(outputfilename, bucket)
-  return outputfilename
+  im.save(outf, format="JPEG")
+  upload_file(outname, bucket)
+  return outname
 
 def delete_objects(objects, bucket):
-	s3_client = boto3.client('s3')
-	response = s3_client.delete_objects(Bucket=bucket, Delete=objects)
+	client = boto3.client('s3')
+	response = client.delete_objects(Bucket=bucket, Delete=objects)
 	return response
 
