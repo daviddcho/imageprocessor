@@ -2,7 +2,6 @@ import boto3
 from os import path
 from PIL import Image, ImageOps, ImageFilter
 
-
 def upload_file(filename, bucket):
   output = f"uploads/{filename}"
   client = boto3.client('s3')
@@ -24,7 +23,6 @@ def list_files(bucket):
   except Exception as e:
     pass
   return contents
-
 
 def apply_filter(filename, preset, bucket):
   s3 = boto3.resource('s3')
