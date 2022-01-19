@@ -2,3 +2,9 @@ env/
 __pycache__
 *.png
 *.jpg
+.terraform
+*.tfstate
+*.tfstate.*
+.terraform.lock.hcl
+*.swp
+tf-cloud-init

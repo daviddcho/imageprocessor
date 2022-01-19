@@ -1,0 +1,22 @@
+#cloud-config
+groups: 
+  - ubuntu: [root,sys]
+  - hashicorp
+
+users:
+  - default 
+  - name: terraform
+    gecos: terraform 
+    shell: /bin/bash
+    primary_group: hashicorp 
+    sudo: ALL=(ALL) NOPASSWD:ALL
+    groups: users, admin
+    lock_passwd: false
+    ssh_authorized_keys:
+      - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDOBpKL99fBO52X8qhW4n7Y5Yj90JekA1QTLCh4LeKfD6YTTNuH60e3sE6qPj/dT4+Vck4Q9LENewRwK2rG/amQ5UxgN196mVvEKU3IpE1W1KNOrit+hkhuNjXRymnRqKtLgUF+vUeWXIfWZl6LY4ai5m8sZwtr2lJv7VSPrLDmg7+Yk0dKGg5NcftAjeV+dqPgSF5i4aXq8epcj1bAUVco3KQEAkFPN/9nONgPrhgSLAeRwK08m475gPePxaRQQSg1/PBnPCe2s5J1f1/NOp/0oj6iZiQuUEofa2kuFBfDsaiscVOg7GYlu9ELUyrbpBKPfkhBtTmgnMh4PBtVrWrzkoNMpNjW0fJluLSeUeTt4mPOoVAr5SDoKRxg7k5ET4zD57d6f6TJYFppPz46mqD+ImEqvvQf7kQnxpb8ldiDGM1qshnep7/RYvPgmFL/rdoe1NP0zr2Ry6Cht54FcygSoSkdRsdHAd66OICCxLgf5SIQm2XipdIsEUQAxupKNDc= brucewayne@gpuslave38
+
+packages:
+  - docker
+
+runcmd:
+  - sudo su terraform 
