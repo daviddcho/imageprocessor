@@ -62,7 +62,7 @@ def apply_filter(filename, preset, bucket):
   return outname
 
 def delete_objects(objects, bucket):
-	client = boto3.client('s3')
-	response = client.delete_objects(Bucket=bucket, Delete=objects)
-	return response
+  client = boto3.client('s3')
+  response = client.delete_objects(Bucket=bucket, Delete=objects)
+  return response
 
