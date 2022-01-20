@@ -6,3 +6,7 @@ docker run -p 5000:5000 imageprocessor
 
 terraform init
 terraform apply
+
+useful things:
+ssh terraform@$(terraform output -raw public_ip) -i ../tf-cloud-init
+cat /var/log/syslog
