@@ -22,9 +22,24 @@ apt:
       keyid: 9DC858229FC7DD38854AE2D88D81803C0EBFCD88 
 
 packages:
+  - nginx
   - docker-ce
   - docker-ce-cli
 
+write_files:
+  - owner: terraform:terraform
+    path: /etc/nginx/conf.d/default.conf
+    content: |
+      server {
+        listen 80;
+        listen [::]:80;
+        gzip on;
+        location / {
+          proxy_pass http://localhost:5000;
+        }
+      }
+
 runcmd:
   - sudo su terraform 
-  - docker run -dp 80:80 daviddcho/imageprocessor
+  - service nginx restart
+  - docker run --network="host" -dp 5000:5000 daviddcho/imageprocessor
