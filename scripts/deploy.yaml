@@ -27,4 +27,4 @@ packages:
 
 runcmd:
   - sudo su terraform 
-  - docker run -dp 5000:5000 daviddcho/imageprocessor
+  - docker run -dp 80:80 daviddcho/imageprocessor
